@@ -23,8 +23,8 @@ public class UiController {
 	}
 
 	@GetMapping(path = "/")
-	public String hi(Model model) {
-		log.info("hi");
+	public String index(Model model) {
+		log.info("index");
 		Flux<Entry> entries = this.webClient.get() //
 				.uri("/v1/entries").retrieve() //
 				.bodyToFlux(Entry.class);
