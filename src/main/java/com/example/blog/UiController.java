@@ -25,9 +25,7 @@ public class UiController {
 	@GetMapping(path = "/")
 	public String index(Model model) {
 		log.info("index");
-		Flux<Entry> entries = this.webClient.get() //
-				.uri("/v1/entries").retrieve() //
-				.bodyToFlux(Entry.class);
+		Flux<Entry> entries = Flux.empty(); // TODO: 演習3
 		model.addAttribute("entries", entries);
 		return "index";
 
@@ -36,10 +34,7 @@ public class UiController {
 	@GetMapping(path = "entries/{entryId}")
 	public String entry(@PathVariable EntryId entryId, Model model) {
 		log.info("entry");
-		Mono<Entry> entry = this.webClient.get() //
-				.uri("/v1/entries/{entryId}", entryId) //
-				.retrieve() //
-				.bodyToMono(Entry.class);
+		Mono<Entry> entry = Mono.empty(); // TODO: 演習3
 		model.addAttribute("entry", entry);
 		return "entry";
 	}
