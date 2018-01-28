@@ -16,5 +16,36 @@
         </li>
     </ul>
 </div>
+<script data-th-inline="javascript">
+    Notification.requestPermission(function (status) {
+        if (Notification.permission !== status) {
+            Notification.permission = status;
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var eventSource = new EventSource(/*[[@{/notification}]]*/ "/notification");
+        eventSource.onmessage = function (e) {
+            var message = JSON.parse(e.data);
+            console.log(message);
+            if (message.type === "UPDATE" || message.type === "CREATE") {
+                var title = message.type + " Entry";
+                if (Notification.permission === "granted") {
+                    var n = new Notification(
+                        title, {
+                            body: message.entry.frontMatter.title
+                        }
+                    );
+                    n.onclick = function () {
+                        location.href = '/entries/' + message.entry.entryId;
+                    };
+                    setTimeout(n.close.bind(n), 5000);
+                } else {
+                    alert(title);
+                }
+            }
+        };
+    });
+</script>
 </body>
 </html>
