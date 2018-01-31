@@ -1,0 +1,7 @@
+applications:
+- name: blog-ui
+  path: target/demo-blog-ui-0.0.1-SNAPSHOT.jar
+  routes:
+  - route: blog-ui-hsakakur.cfapps.io
+  env:
+    BLOG_API_URI: https://blog-api-hsakakur.cfapps.io
